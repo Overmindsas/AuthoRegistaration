@@ -19,7 +19,7 @@ class PassLogin():
     
         while len(password) < lenPass:
             if re.match(regPass, password) is not None:
-                print(password)
+                return password
                 break
             else:
                 password+=str(massLetters[random.randint(0, len(massLetters)-1)])
@@ -31,7 +31,7 @@ class PassLogin():
         regLogin = "[0-9a-zA-Z]{"+str(lenLogin-1)+",}"
         while len(login) < lenLogin:
             if re.match(regLogin, login) is not None:
-                print(login+"@"+str(domainName))
+                return login+"@"+str(domainName)
                 break
             else:
                 login+=str(massLetters[random.randint(0, len(massLetters)-1)])
@@ -44,6 +44,9 @@ def checkLenPass():
     if lenLogin and domainName and lenPass:
         PL.loginGenerator(lenLogin, domainName)
         PL.passGenerator(lenPass)
+        newFile = open("LoginPassword","w+")
+        newFile.write("Login:\t{0}\nPassword:\t{1}".format(str(PL.loginGenerator(lenLogin, domainName)), str(PL.passGenerator(lenPass))))
+        newFile.close()
     else:
         checkLenPass()
 
